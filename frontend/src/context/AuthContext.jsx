@@ -42,8 +42,31 @@ export const AuthProvider = ({ children }) => {
     setUser(null);
   };
 
+  const hasAccess = (moduleName, accessType) => {
+    if (!user) return false;
+    const PERMISSIONS = {
+      trip: {
+        write: ['Dispatcher'],
+        read: ['Dispatcher', 'SafetyOfficer']
+      },
+      maintenance: {
+        write: ['FleetManager'],
+        read: ['FleetManager', 'Dispatcher', 'FinancialAnalyst']
+      },
+      fuelExpense: {
+        write: ['FinancialAnalyst'],
+        read: ['FinancialAnalyst']
+      },
+      analytics: {
+        write: ['FleetManager', 'FinancialAnalyst'],
+        read: ['FleetManager', 'FinancialAnalyst']
+      }
+    };
+    return PERMISSIONS[moduleName]?.[accessType]?.includes(user.role) || false;
+  };
+
   return (
-    <AuthContext.Provider value={{ user, isAuthenticated: !!user, login, signup, logout, loading }}>
+    <AuthContext.Provider value={{ user, isAuthenticated: !!user, login, signup, logout, loading, hasAccess }}>
       {children}
     </AuthContext.Provider>
   );

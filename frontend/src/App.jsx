@@ -4,6 +4,10 @@ import { AuthProvider, AuthContext } from './context/AuthContext';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Dashboard from './pages/Dashboard';
+import Trips from './pages/Trips';
+import Maintenance from './pages/Maintenance';
+import FuelExpenses from './pages/FuelExpenses';
+import Analytics from './pages/Analytics';
 
 const ProtectedRoute = ({ children }) => {
   const { isAuthenticated, loading } = useContext(AuthContext);
@@ -21,15 +25,17 @@ function AppRoutes() {
       
       {/* Protected Routes */}
       <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+      <Route path="/trips" element={<ProtectedRoute><Trips /></ProtectedRoute>} />
+      <Route path="/maintenance" element={<ProtectedRoute><Maintenance /></ProtectedRoute>} />
+      <Route path="/fuel-expenses" element={<ProtectedRoute><FuelExpenses /></ProtectedRoute>} />
+      <Route path="/analytics" element={<ProtectedRoute><Analytics /></ProtectedRoute>} />
       
       {/* Redirect root to dashboard */}
       <Route path="/" element={<Navigate to="/dashboard" />} />
       
-      {/* Placeholders for teammates */}
+      {/* Placeholders for teammates if needed */}
       <Route path="/vehicles" element={<ProtectedRoute><div>Vehicles Module</div></ProtectedRoute>} />
       <Route path="/drivers" element={<ProtectedRoute><div>Drivers Module</div></ProtectedRoute>} />
-      <Route path="/trips" element={<ProtectedRoute><div>Trips Module</div></ProtectedRoute>} />
-      <Route path="/maintenance" element={<ProtectedRoute><div>Maintenance Module</div></ProtectedRoute>} />
     </Routes>
   );
 }
